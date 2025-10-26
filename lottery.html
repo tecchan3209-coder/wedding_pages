@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>GIFから画像へ</title>
+  <style>
+    img { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body>
+  <img id="media" src="https://drive.google.com/file/d/1Od8dSNz1auhqaoVCqoiSVonn0v8RJmBS/view?usp=drive_link" alt="animation">
+  <script>
+    // 7秒後に画像に切り替える
+    setTimeout(() => {
+      document.getElementById("media").src = "https://drive.google.com/file/d/1pNxmevlLM6L0TZfXLZZIHiT5fZ7xUIsQ/view?usp=drive_link";
+    }, 7000);
+  </script>
+</body>
+</html>
