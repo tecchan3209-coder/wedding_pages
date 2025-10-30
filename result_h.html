@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>はずれ画面</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #2c003e, #000); /* 夜空風 */
+      font-family: 'Comic Sans MS', cursive;
+      color: #fff;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #ff69b4, 0 0 20px #ffd700, 0 0 30px #ffcc00;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ff69b4, 0 0 20px #ffd700; }
+      to   { text-shadow: 0 0 20px #ffcc00, 0 0 40px #ff69b4; }
+    }
+
+    .message {
+      font-size: 1.5rem;
+      margin-top: 10px;
+      animation: fadeIn 2s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url("images/stars.png") repeat;
+      opacity: 0.4;
+      z-index: -1;
+      animation: twinkle 12s linear infinite;
+    }
+
+    @keyframes twinkle {
+      from { background-position: 0 0; }
+      to { background-position: 1000px 1000px; }
+    }
+
+    .balloons {
+      position: absolute;
+      bottom: -150px;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      pointer-events: none;
+    }
+
+    .balloons img {
+      width: 60px;
+      animation: floatUp 8s linear infinite;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0); opacity: 1; }
+      to   { transform: translateY(-120vh); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <h1>ごめんなさい。はずれちゃいました。</h1>
+  <div class="message">披露宴の続きをお楽しみください！</div>
+
+  <!-- 風船や紙吹雪のような演出 -->
+  <div class="balloons">
+    <img src="images/balloon1.png" alt="balloon">
+    <img src="images/balloon2.png" alt="balloon">
+    <img src="images/balloon3.png" alt="balloon">
+  </div>
+</body>
+</html>
