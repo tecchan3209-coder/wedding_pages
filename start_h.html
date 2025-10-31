@@ -30,12 +30,16 @@
       font-size: 1.2rem;
       margin-bottom: 10px;
       opacity: 0;
-      animation: fadeIn 2s ease forwards;
-      animation-delay: 0.5s;
+      animation: fadeIn 2s ease forwards 0.5s;
     }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     .scroll-note {
       font-size: 1rem;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       color: #ffd700;
       animation: blink 1.5s infinite;
     }
@@ -45,7 +49,7 @@
     }
 
     section {
-      min-height: 70vh; /* 画像間隔を詰める */
+      min-height: 50vh; /* 画像間隔をさらに狭める */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -53,7 +57,7 @@
     }
 
     .image-box {
-      margin: 20px 0;
+      margin: 10px 0; /* 余白をさらに縮小 */
       opacity: 0;
       transition: all 1s ease-out;
     }
@@ -65,14 +69,14 @@
     }
 
     /* アニメーションパターン */
-    .fade-up { transform: translateY(50px); }
-    .slide-left { transform: translateX(-80px); }
-    .slide-right { transform: translateX(80px); }
+    .fade-up { transform: translateY(40px); }
+    .slide-left { transform: translateX(-60px); }
+    .slide-right { transform: translateX(60px); }
 
     .show { opacity: 1; transform: translate(0,0); }
 
     .caption {
-      margin-top: 10px;
+      margin-top: 8px;
       font-size: 1rem;
       opacity: 0;
       transition: all 1s ease-out;
@@ -96,7 +100,7 @@
       animation: shine 6s linear infinite;
       width: 80%;
       max-width: 320px;
-      margin: 30px 0;
+      margin: 20px 0;
     }
     .btn:hover { transform: scale(1.1); }
     @keyframes shine {
@@ -122,7 +126,7 @@
 </head>
 <body>
   <div class="stars"></div>
-  <h1>✨ ひろき ＆ まゆこ Wedding Special Lottery ✨</h1>
+  <h1>✨ ひろき ＆ まゆこ Wedding Special Lottery(10) ✨</h1>
   <p class="subtitle">本日は披露宴にお越しいただきありがとうございます。<br>皆さまに楽しんでいただけるよう、特別な抽選をご用意しました。</p>
   <p class="scroll-note">▼ 下にスクロールしてください ▼</p>
 
