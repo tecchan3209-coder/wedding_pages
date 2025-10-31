@@ -49,7 +49,7 @@
     }
 
     section {
-      min-height: 50vh; /* 画像間隔をさらに狭める */
+      min-height: 50vh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -57,7 +57,7 @@
     }
 
     .image-box {
-      margin: 10px 0; /* 余白をさらに縮小 */
+      margin: 10px 0;
       opacity: 0;
       transition: all 1s ease-out;
     }
@@ -68,11 +68,9 @@
       box-shadow: 0 0 25px #fff, 0 0 40px #ffd700;
     }
 
-    /* アニメーションパターン */
     .fade-up { transform: translateY(40px); }
     .slide-left { transform: translateX(-60px); }
     .slide-right { transform: translateX(60px); }
-
     .show { opacity: 1; transform: translate(0,0); }
 
     .caption {
@@ -81,9 +79,7 @@
       opacity: 0;
       transition: all 1s ease-out;
     }
-    .image-box.show .caption {
-      opacity: 1;
-    }
+    .image-box.show .caption { opacity: 1; }
 
     .btn {
       font-size: 1.3rem;
@@ -122,6 +118,35 @@
       from { background-position: 0 0; }
       to { background-position: 1000px 1000px; }
     }
+
+    /* モーダル */
+    dialog {
+      border: none;
+      border-radius: 15px;
+      padding: 20px;
+      background: #fff;
+      color: #000;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      max-width: 300px;
+    }
+    dialog::backdrop {
+      background: rgba(0,0,0,0.6);
+    }
+    .modal-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-around;
+    }
+    .modal-buttons button {
+      padding: 0.5em 1.5em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .yes-btn { background: #ffd700; color: #000; }
+    .no-btn { background: #ccc; color: #000; }
   </style>
 </head>
 <body>
@@ -133,7 +158,7 @@
   <section>
     <div class="image-box fade-up">
       <img src="images/fasshionable.jpg" alt="ファッショナブルイースター">
-      <div class="caption">🌸 華やかな世界へようこそ 🌸</div>
+      <div class="caption">🌸 ディズニー好き二人による披露宴は楽しんでいただけてますでしょうか？ 🌸</div>
     </div>
   </section>
 
@@ -147,17 +172,33 @@
   <section>
     <div class="image-box slide-right">
       <img src="images/fasshionable.jpg" alt="花火">
-      <div class="caption">🎆 夜空を彩る祝福の花火 🎆</div>
+      <div class="caption">🎆 このひとときが、皆さまにとっても思い出に残る時間となりますように。 🎆</div>
     </div>
   </section>
 
   <section>
-    <button class="btn" onclick="startLottery()">抽選する</button>
+    <button class="btn" onclick="openModal()">抽選する</button>
   </section>
 
+  <!-- モーダル -->
+  <dialog id="confirmDialog">
+    <p>抽選を開始してもよいですか？</p>
+    <div class="modal-buttons">
+      <button class="yes-btn" onclick="confirmYes()">はい</button>
+      <button class="no-btn" onclick="confirmNo()">いいえ</button>
+    </div>
+  </dialog>
+
   <script>
-    function startLottery() {
+    function openModal() {
+      document.getElementById("confirmDialog").showModal();
+    }
+    function confirmYes() {
+      document.getElementById("confirmDialog").close();
       window.location.href = "lottery_h.html";
+    }
+    function confirmNo() {
+      document.getElementById("confirmDialog").close();
     }
 
     // スクロールで画像とキャプションをフェードイン
