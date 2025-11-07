@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>はずれ画面</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #1a093f, #000); /* ネイビー基調 */
+      font-family: 'Georgia', 'Times New Roman', serif;
+      color: #fff;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      margin-bottom: 20px;
+      text-shadow: 0 0 15px #ffd700, 0 0 25px #ffcc00, 0 0 35px #fff;
+      animation: glow 2s infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ffd700, 0 0 20px #ffcc00; }
+      to   { text-shadow: 0 0 25px #fff, 0 0 40px #ffd700; }
+    }
+
+    .message {
+      font-size: 1.3rem;
+      margin-top: 10px;
+      animation: fadeIn 2s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url("images/stars.png") repeat;
+      opacity: 0.3;
+      z-index: -2;
+      animation: twinkle 12s linear infinite;
+    }
+    @keyframes twinkle {
+      from { background-position: 0 0; }
+      to { background-position: 1000px 1000px; }
+    }
+
+    .balloons {
+      position: absolute;
+      bottom: -150px;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .balloons img {
+      width: 60px;
+      animation: floatUp 8s linear infinite;
+    }
+    @keyframes floatUp {
+      from { transform: translateY(0); opacity: 1; }
+      to   { transform: translateY(-120vh); opacity: 0; }
+    }
+
+    /* 紙吹雪 */
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: gold;
+      top: -10px;
+      animation: fall 5s linear infinite;
+      opacity: 0.8;
+    }
+    @keyframes fall {
+      to { transform: translateY(110vh) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <h1>ごめんなさい、はずれです…</h1>
+  <div class="message">でも「ひろき ＆ まゆこ」からの感謝の気持ちは皆さま全員に届いています💐<br>どうぞ披露宴の続きをお楽しみください！</div>
+
+  <!-- 風船演出 -->
+  <div class="balloons">
+    <img src="images/balloon.jpg" alt="balloon">
+    <img src="images/balloon.jpg" alt="balloon">
+    <img src="images/balloon.jpg" alt="balloon">
+  </div>
+
+  <!-- 紙吹雪を複数生成 -->
+  <script>
+    for (let i = 0; i < 30; i++) {
+      const confetti = document.createElement("div");
+      confetti.classList.add("confetti");
+      confetti.style.left = Math.random() * 100 + "vw";
+      confetti.style.background = ["#ffd700","#ff69b4","#ffffff"][Math.floor(Math.random()*3)];
+      confetti.style.animationDuration = (3 + Math.random() * 3) + "s";
+      document.body.appendChild(confetti);
+    }
+  </script>
+</body>
+</html>

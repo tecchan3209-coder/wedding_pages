@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Lottery</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at top, #0d1b2a, #000);
+      font-family: 'Georgia', 'Times New Roman', serif;
+      color: #fff;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin: 30px 20px 10px;
+      text-shadow: 0 0 15px #ffd700, 0 0 25px #ffcc00, 0 0 35px #fff;
+      animation: glow 3s infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ffd700, 0 0 20px #ffcc00; }
+      to   { text-shadow: 0 0 25px #fff, 0 0 40px #ffd700; }
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      opacity: 0;
+      animation: fadeIn 2s ease forwards 0.5s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .scroll-note {
+      font-size: 1rem;
+      margin-bottom: 15px;
+      color: #ffd700;
+      animation: blink 1.5s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    section {
+      min-height: 50vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-box {
+      margin: 10px 0;
+      opacity: 0;
+      transition: all 1s ease-out;
+    }
+    .image-box img {
+      width: 85%;
+      max-width: 320px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px #fff, 0 0 40px #ffd700;
+    }
+
+    .fade-up { transform: translateY(40px); }
+    .slide-left { transform: translateX(-60px); }
+    .slide-right { transform: translateX(60px); }
+    .show { opacity: 1; transform: translate(0,0); }
+
+    .caption {
+      margin-top: 8px;
+      font-size: 1rem;
+      opacity: 0;
+      transition: all 1s ease-out;
+    }
+    .image-box.show .caption { opacity: 1; }
+
+    .btn {
+      font-size: 1.3rem;
+      padding: 1em 2.5em;
+      border: none;
+      border-radius: 40px;
+      background: linear-gradient(90deg, #ffd700, #ffcc00, #fff8dc);
+      background-size: 300% 300%;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 20px #ffd700, 0 0 40px #fff;
+      transition: transform 0.3s;
+      animation: shine 6s linear infinite;
+      width: 80%;
+      max-width: 320px;
+      margin: 20px 0;
+    }
+    .btn:hover { transform: scale(1.1); }
+    @keyframes shine {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .stars {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: url("images/stars.png") repeat;
+      opacity: 0.3;
+      z-index: -3;
+      animation: twinkle 12s linear infinite;
+    }
+    @keyframes twinkle {
+      from { background-position: 0 0; }
+      to { background-position: 1000px 1000px; }
+    }
+
+    /* モーダル */
+    dialog {
+      border: none;
+      border-radius: 15px;
+      padding: 20px;
+      background: #fff;
+      color: #000;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      max-width: 300px;
+    }
+    dialog::backdrop { background: rgba(0,0,0,0.6); }
+    .modal-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-around;
+    }
+    .modal-buttons button {
+      padding: 0.5em 1.5em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .yes-btn { background: #ffd700; color: #000; }
+    .no-btn { background: #ccc; color: #000; }
+
+    /* ローディング画面 */
+    #loading {
+      display: none; /* 初期状態は非表示 */
+      position: fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background: rgba(0,0,0,0.85);
+      justify-content:center;
+      align-items:center;
+      flex-direction:column;
+      z-index: 9999;
+      color:#fff;
+      font-size:1.5rem;
+      text-shadow:0 0 10px #ffd700;
+    }
+    .spinner {
+      border: 6px solid rgba(255,255,255,0.2);
+      border-top: 6px solid #ffd700;
+      border-radius: 50%;
+      width: 60px; height: 60px;
+      animation: spin 1s linear infinite;
+      margin-bottom:20px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+
+  <h1>✨ ひろき ＆ まゆこ Wedding Special Lottery ✨</h1>
+  <p class="subtitle">本日は披露宴にお越しいただきありがとうございます。<br>皆さまに楽しんでいただけるよう、特別な抽選をご用意しました。</p>
+  <p class="scroll-note">▼ 下にスクロールしてください ▼</p>
+
+  <section>
+    <div class="image-box fade-up">
+      <img src="images/mickey.jpg" alt="ファッショナブルイースター">
+      <div class="caption">🌸 ディズニー好き二人による披露宴は楽しんでいただけてますでしょうか？ 🌸</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="image-box slide-left">
+      <img src="images/fasshionable.jpg" alt="シンデレラ城">
+      <div class="caption">🏰 ミッキーたちからのおもてなしも如何だったでしょうか？ 🏰</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="image-box slide-right">
+      <img src="images/dca.jpg" alt="花火">
+      <div class="caption">🎆 このひとときが、皆さまにとっても思い出に残る時間となりますように。 🎆</div>
+    </div>
+  </section>
+
+  <section>
+    <button class="btn" onclick="openModal()">抽選する</button>
+  </section>
+
+  <!-- モーダル -->
+  <dialog id="confirmDialog">
+    <p>抽選を開始してもよいですか？</p>
+    <div class="modal-buttons">
+      <button class="yes-btn" onclick="confirmYes()">はい</button>
+      <button class="no-btn" onclick="confirmNo()">いいえ</button>
+    </div>
+  </dialog>
+
+  <!-- ローディング画面 -->
+  <div id="loading">
+    <div class="spinner"></div>
+    <p>✨ お待ちください ✨</p>
+  </div>
+
+  <script>
+    function openModal() {
+      document.getElementById("confirmDialog").showModal();
+    }
+    function confirmYes(){
+      // モーダルを閉じる
+      document.getElementById("confirmDialog").close();
+      // ローディング画面を表示
+      document.getElementById("loading").style.display = "flex";
+      // 2秒後に遷移（演出時間を確保）
+      setTimeout(() => {
+        window.location.href = "lottery_example.html";
+      }, 2000);
+    }
+
+    function confirmNo() {
+      document.getElementById("confirmDialog").close();
+    }
+
+    // スクロールで画像とキャプションをフェードイン
+    const boxes = document.querySelectorAll('.image-box');
+    window.addEventListener('scroll', () => {
+      const triggerBottom = window.innerHeight * 0.85;
+      boxes.forEach(box => {
+        const boxTop = box.getBoundingClientRect().top;
+        if (boxTop < triggerBottom) {
+          box.classList.add('show');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
