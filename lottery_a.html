@@ -8,29 +8,28 @@
       margin: 0;
       padding: 0;
       min-height: 100vh;
-      background: #111;    /* 背景色（任意） */
+      background: #111;
       color: #fff;
     }
     img {
-      width: 80%;          /* 画面幅の80% */
+      width: 80%;
       height: auto;
-      max-width: 100%;     /* はみ出し防止 */
+      max-width: 100%;
       display: block;
-      margin: 0 auto;      /* 中央寄せ */
+      margin: 0 auto;
     }
     #loading {
-      display: none;       /* 初期は非表示 */
-      position: fixed;     /* 画面全体に固定 */
+      display: none;       /* 初期は完全に非表示 */
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(17,17,17,0.95); /* 半透明背景でオーバーレイ */
-      display: flex;
+      background: rgba(17,17,17,0.95);
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      z-index: 9999;       /* 最前面に表示 */
+      z-index: 9999;
       text-align: center;
     }
     .spinner {
@@ -61,7 +60,8 @@
     // 11秒後にロード画面を表示
     setTimeout(() => {
       document.getElementById("media").style.display = "none";   // GIFを非表示
-      document.getElementById("loading").style.display = "flex"; // ロード画面表示
+      const loading = document.getElementById("loading");
+      loading.style.display = "flex"; // ロード画面をここで初めて表示
 
       // ロード画面を2秒表示した後に遷移
       setTimeout(() => {
