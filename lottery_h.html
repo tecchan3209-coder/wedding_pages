@@ -11,20 +11,51 @@
       place-items: center; /* 中央寄せ */
       min-height: 100vh;   /* 画面全体を使う */
       background: #111;    /* 背景色（任意） */
+      color: #fff;
     }
     img {
       width: 80%;          /* 画面幅の80% */
       height: auto;
       max-width: 100%;     /* はみ出し防止 */
     }
+    #loading {
+      display: none;       /* 初期は非表示 */
+      text-align: center;
+    }
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid #ccc;
+      border-top: 5px solid #09f;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
+  <!-- ローディング画面 -->
+  <div id="loading">
+    <div class="spinner"></div>
+    <p>✨ お待ちください ✨</p>
+  </div>
+
+  <!-- GIFアニメーション -->
   <img id="media" src="images/h.gif" alt="animation">
+
   <script>
-    // 11秒後に画像に切り替える
+    // 11秒後にロード画面を表示
     setTimeout(() => {
-      window.location.href = "result_h.html";
+      document.getElementById("media").style.display = "none";   // GIFを非表示
+      document.getElementById("loading").style.display = "block"; // ロード画面表示
+
+      // ロード画面を2秒表示した後に遷移
+      setTimeout(() => {
+        window.location.href = "result_h.html";
+      }, 2000);
     }, 11000);
   </script>
 </body>
